@@ -20,6 +20,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: .env setting
+        run: |
+          echo "REACT_IMG_URL=${{ secrets.REACT_IMG_URL }}" >> .env
       - name: Detect package manager
         uses: pnpm/action-setup@v3
         with:
