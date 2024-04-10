@@ -14,8 +14,5 @@ export default function imageLoader({
     imgSrc = `${src}?w=${width}&q=${quality || 75}`;
   }
 
-  console.log(process.env.NODE_ENV);
-  console.log(process.env.REACT_IMG_URL);
-
   return imgSrc;
 }
