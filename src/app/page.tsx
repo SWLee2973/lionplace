@@ -8,7 +8,7 @@ export default function Home() {
       <div className="flex aspect-[9/16] h-2/5 w-full flex-col items-center justify-between">
         <Logo option="large" />
         <LinkButton theme="white" to="/login">
-          시작하기1
+          시작하기
         </LinkButton>
       </div>
     </section>

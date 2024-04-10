@@ -9,13 +9,13 @@ export default function imageLoader({
   width: number;
   quality: number;
 }) {
-  let imgSrc: string = `${src}?w=${width}&q=${quality || 75}`;
-  if (process.env.NODE_ENV === 'production') {
-    imgSrc = `${process.env.REACT_IMG_URL}/${src}?w=${width}&q=${quality || 75}`;
+  let imgSrc: string = `${process.env.REACT_IMG_URL}/${src}?w=${width}&q=${quality || 75}`;
+  if (process.env.NODE_ENV === 'development') {
+    imgSrc = `${src}?w=${width}&q=${quality || 75}`;
   }
 
-  alert(process.env.REACT_IMG_URL);
-  alert(imgSrc);
+  console.log(process.env.NODE_ENV);
+  console.log(process.env.REACT_IMG_URL);
 
   return imgSrc;
 }
