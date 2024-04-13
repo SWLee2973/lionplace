@@ -16,8 +16,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className={`${notoSans.className} flex justify-center`}>
-        <main className="flex h-screen w-[1296px] justify-center bg-primary desktop:w-full mobile:w-[640px]">
+      <body className={`${notoSans.className} flex justify-center bg-primary`}>
+        <main className="flex w-[1296px] justify-center desktop:w-full mobile:w-[640px]">
           {children}
         </main>
       </body>

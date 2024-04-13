@@ -13,7 +13,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       variants={variants}
       initial="hidden"
       animate="enter"
-      className="h-fit w-full bg-white mobile:w-[430px]"
+      className="flex h-fit w-full items-center bg-white mobile:w-[430px]"
     >
       {children}
     </motion.div>

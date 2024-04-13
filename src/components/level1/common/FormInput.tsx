@@ -1,6 +1,7 @@
 import React from 'react';
 
 interface InputProps {
+  children?: React.ReactNode;
   inputType: string;
   id: string;
   label: string;
@@ -8,7 +9,7 @@ interface InputProps {
 }
 
 function FormInput(props: InputProps) {
-  const { inputType, id, label, ...rest } = props;
+  const { children, inputType, id, label, ...rest } = props;
   return (
     <div className="flex flex-col gap-1">
       <label className="text-label-small text-white" htmlFor={id}>
@@ -20,6 +21,7 @@ function FormInput(props: InputProps) {
         id={id}
         {...rest}
       />
+      {children}
     </div>
   );
 }
