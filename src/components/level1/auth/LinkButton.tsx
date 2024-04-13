@@ -17,7 +17,7 @@ export default function LinkButton({
 }) {
   return (
     <Link
-      className={`${buttonTheme[theme]} flex h-12 w-64 items-center justify-center rounded-md text-label-small font-bold`}
+      className={`${buttonTheme[theme]} flex h-12 w-64 select-none items-center justify-center rounded-md text-label-small font-bold`}
       href={to}
     >
       {children}
