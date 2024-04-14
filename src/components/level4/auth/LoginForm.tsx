@@ -4,11 +4,47 @@ import LinkButton from '@/components/level1/auth/LinkButton';
 import LoginButton from '@/components/level1/auth/LoginButton';
 import FormInput from '@/components/level1/common/FormInput';
 import Separator from '@/components/level1/common/Separator';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+
+interface ILogin {
+  id: string;
+  password: string;
+}
 
 function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ILogin>({
+    defaultValues: {
+      id: '',
+      password: '',
+    },
+  });
+
+  const handleLoginForm = async (data: ILogin) => {
+    const toastLoading = toast.loading('잠시만 기다려 주세요...');
+
+    try {
+      const response = await signIn('credentials', {
+        id: data.id,
+        password: data.password,
+        redirect: false,
+      });
+    } catch (error: any) {
+    } finally {
+    }
+  };
+
   return (
-    <form className="flex flex-col items-start gap-6">
+    <form
+      onSubmit={handleSubmit(handleLoginForm)}
+      className="flex flex-col items-start gap-6"
+    >
       <h2 className="text-heading-xl text-white">로그인</h2>
       <div className="flex flex-col gap-3">
         <FormInput
@@ -16,7 +52,10 @@ function LoginForm() {
           name="id"
           label="아이디"
           inputType="text"
-          placeholder="아이디를 입력해 주세요"
+          placeholder="아이디를 입력해 주세요."
+          register={register('id', {
+            required: '아이디를 입력해 주세요.',
+          })}
         />
         <FormInput
           id="password"
@@ -25,6 +64,9 @@ function LoginForm() {
           inputType="password"
           placeholder="비밀번호를 입력해 주세요"
           autoComplete="off"
+          register={register('password', {
+            required: '비밀번호를 입력해 주세요.',
+          })}
         />
         <div className="flex items-center justify-end gap-2 text-label-small text-white">
           <Link href="">아이디 찾기</Link>
