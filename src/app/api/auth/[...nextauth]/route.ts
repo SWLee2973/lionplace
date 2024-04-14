@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
         password: {},
       },
 
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const id = credentials?.id as string;
         const plainPassword = credentials?.password as string;
 
