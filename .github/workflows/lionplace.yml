@@ -23,6 +23,9 @@ jobs:
       - name: .env setting
         run: |
           echo "REACT_IMG_URL=${{ secrets.REACT_IMG_URL }}" >> .env
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> .env
       - name: Detect package manager
         uses: pnpm/action-setup@v3
         with:

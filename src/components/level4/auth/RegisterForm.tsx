@@ -38,7 +38,7 @@ function RegisterForm() {
     // toast 로딩 띄우기
     const toastLoading = toast.loading('잠시만 기다려 주세요...');
     try {
-      const response = await axios.post('/api/users/register', data);
+      await axios.post('/api/users/register', data);
       toast.success('회원가입이 완료되었어요!');
       router.push('/login');
     } catch (error: any) {

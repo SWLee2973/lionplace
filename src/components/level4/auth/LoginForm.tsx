@@ -3,6 +3,7 @@
 import LinkButton from '@/components/level1/auth/LinkButton';
 import LoginButton from '@/components/level1/auth/LoginButton';
 import FormInput from '@/components/level1/common/FormInput';
+import InputErrorMessage from '@/components/level1/common/InputErrorMessage';
 import Separator from '@/components/level1/common/Separator';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
@@ -30,13 +31,18 @@ function LoginForm() {
     const toastLoading = toast.loading('잠시만 기다려 주세요...');
 
     try {
-      const response = await signIn('credentials', {
+      await signIn('credentials', {
         id: data.id,
         password: data.password,
         redirect: false,
       });
     } catch (error: any) {
+      toast.error(
+        '로그인에 실패했어요.\n아이디와 비밀번호를 확인해 주세요.',
+        error?.message,
+      );
     } finally {
+      toast.dismiss(toastLoading);
     }
   };
 
@@ -56,7 +62,11 @@ function LoginForm() {
           register={register('id', {
             required: '아이디를 입력해 주세요.',
           })}
-        />
+        >
+          {errors?.id?.message && (
+            <InputErrorMessage message={errors.id.message} />
+          )}
+        </FormInput>
         <FormInput
           id="password"
           name="password"
@@ -67,7 +77,11 @@ function LoginForm() {
           register={register('password', {
             required: '비밀번호를 입력해 주세요.',
           })}
-        />
+        >
+          {errors?.password?.message && (
+            <InputErrorMessage message={errors.password.message} />
+          )}
+        </FormInput>
         <div className="flex items-center justify-end gap-2 text-label-small text-white">
           <Link href="">아이디 찾기</Link>
           <Separator />
