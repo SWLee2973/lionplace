@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  output: 'default',
   assetPrefix:
     process.env.NODE_ENV === 'development'
       ? ''
