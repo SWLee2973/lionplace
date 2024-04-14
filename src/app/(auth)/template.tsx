@@ -1,5 +1,6 @@
 'use client';
 
+import ToasterContext from '@/context/ToasterContext';
 import { motion } from 'framer-motion';
 
 const variants = {
@@ -16,6 +17,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       className="flex h-fit w-full items-center bg-white mobile:w-[430px]"
     >
       {children}
+      <ToasterContext />
     </motion.div>
   );
 }

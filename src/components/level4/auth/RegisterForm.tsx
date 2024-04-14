@@ -4,6 +4,9 @@ import LoginButton from '@/components/level1/auth/LoginButton';
 import FormInput from '@/components/level1/common/FormInput';
 import InputErrorMessage from '@/components/level1/common/InputErrorMessage';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface IRegister {
   id: string;
@@ -29,11 +32,23 @@ function RegisterForm() {
     },
   });
 
+  const router = useRouter();
+
   const handleSubmitForm = async (data: IRegister) => {
+    // toast 로딩 띄우기
+    const toastLoading = toast.loading('잠시만 기다려 주세요...');
     try {
-      console.log(data);
-    } catch (error) {
+      const response = await axios.post('/api/users/register', data);
+      toast.success('회원가입이 완료되었어요!');
+      router.push('/login');
+    } catch (error: any) {
+      console.log(error);
+      toast.error(
+        '회원가입에 실패했어요.\n관리자에게 문의해 주세요.\n',
+        error?.message,
+      );
     } finally {
+      toast.dismiss(toastLoading);
     }
   };
 
@@ -67,10 +82,7 @@ function RegisterForm() {
           inputType="text"
           placeholder="사용할 닉네임을 입력해주세요"
           register={register('nickname', {
-            required: true,
-            validate: (val: string) => {
-              if (val === '') return '닉네임을 입력해 주세요';
-            },
+            required: '닉네임을 입력해 주세요',
           })}
         >
           {errors?.nickname?.message && (
@@ -109,7 +121,7 @@ function RegisterForm() {
             validate: (val: string) => {
               if (
                 !val.match(
-                  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8}$/,
+                  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#.~_-])[A-Za-z\d@$!%*?&#.~_-]{8,20}$/,
                 )
               )
                 return '8문자 이상, 특수문자를 포함해 입력해 주세요.';
@@ -141,7 +153,7 @@ function RegisterForm() {
       </div>
 
       <div className="mt-6">
-        <LoginButton />
+        <LoginButton>회원가입</LoginButton>
       </div>
     </form>
   );
