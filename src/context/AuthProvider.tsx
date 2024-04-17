@@ -5,7 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 
 interface IProps {
   children: React.ReactNode;
-  session: Session;
+  session: Session | null;
 }
 
 export default function AuthProvider({ children, session }: IProps) {

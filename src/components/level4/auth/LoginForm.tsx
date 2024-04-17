@@ -7,6 +7,7 @@ import InputErrorMessage from '@/components/level1/common/InputErrorMessage';
 import Separator from '@/components/level1/common/Separator';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -26,16 +27,24 @@ function LoginForm() {
       password: '',
     },
   });
+  const router = useRouter();
 
   const handleLoginForm = async (data: ILogin) => {
     const toastLoading = toast.loading('잠시만 기다려 주세요...');
 
     try {
-      await signIn('credentials', {
+      const response = await signIn('credentials', {
         id: data.id,
         password: data.password,
         redirect: false,
       });
+
+      if (response?.status === 401) {
+        toast.error('아이디와 비밀번호를 확인해 주세요.');
+      } else {
+        toast.success('환영합니다!');
+        router.push('/test');
+      }
     } catch (error: any) {
       toast.error(
         '로그인에 실패했어요.\n아이디와 비밀번호를 확인해 주세요.',
