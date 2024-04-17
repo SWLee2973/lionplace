@@ -45,10 +45,29 @@ const authOptions: NextAuthOptions = {
         return {
           userId: isUserExist?._id,
           id: isUserExist?.id || 'Anonymous',
+          nickname: isUserExist?.nickname || '',
         };
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        // console.log('user', user);
+        token.user = {
+          id: user.id,
+          nickname: user.nickname,
+        };
+      }
+
+      return token;
+    },
+    async session({ session, token }: { session: any; token: any }) {
+      session.user = token.user;
+
+      return session;
+    },
+  },
   debug: process.env.NODE_ENV === 'development',
 };
 
